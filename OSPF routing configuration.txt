@@ -1,0 +1,81 @@
+OSPF configuration
+
+Router 1 (R1)
+
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#router ospf 1
+R1(config-router)#network 192.168.12.0 0.0.0.255 area 0
+R1(config-router)#
+03:18:59: %OSPF-5-ADJCHG: Process 1, Nbr 30.0.0.2 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+
+R1(config-router)#exit
+R1(config)#do sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/32 is subnetted, 1 subnets
+O       10.0.0.2/32 [110/2] via 192.168.12.2, 00:00:44, GigabitEthernet0/0
+     20.0.0.0/32 is subnetted, 1 subnets
+O       20.0.0.2/32 [110/2] via 192.168.12.2, 00:00:44, GigabitEthernet0/0
+     30.0.0.0/32 is subnetted, 1 subnets
+O       30.0.0.2/32 [110/2] via 192.168.12.2, 00:00:44, GigabitEthernet0/0
+     192.168.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.12.0/24 is directly connected, GigabitEthernet0/0
+L       192.168.12.1/32 is directly connected, GigabitEthernet0/0
+
+R1(config)#
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#ping 10.0.0.2
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.0.0.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms
+
+R1#ping 20.0.0.2
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 20.0.0.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms
+
+R1#ping 30.0.0.2
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 30.0.0.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms
+
+R1#
+
+
+Router 2 (R2)
+
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#router ospf 1
+R2(config-router)#network 10.0.0.0 0.0.0.255 area 0
+R2(config-router)#network 20.0.0.0 0.0.0.255 area 0
+R2(config-router)#network 30.0.0.0 0.0.0.255 area 0
+R2(config-router)#network 192.168.12.0 0.0.0.255 area 0
+R2(config-router)#
+R2(config-router)#
+03:35:02: %OSPF-5-ADJCHG: Process 1, Nbr 192.168.12.1 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+
+R2(config-router)#exit
+R2(config)#
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
